@@ -13,13 +13,13 @@ func returnAllUsers(w http.ResponseWriter, r *http.Request) {
 
 	db := connect()
 	defer db.Close()
-
+	// Query to DB
 	rows, err := db.Query("Select id,first_name as FirstName,last_name as LastName from users where first_name is not null and last_name is not null limit 0,5;")
 	
 	if err != nil {
 		log.Print(err)
 	}
-
+	// construct data for response
 	for rows.Next() {
 		if err := rows.Scan(&users.id, &users.FirstName, &users.LastName); err != nil {
 			log.Fatal(err.Error())
